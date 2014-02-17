@@ -147,11 +147,12 @@ var idealGasLaw = function(knownParams){
 			T: und.bind(idealGasTemp, null, knownParams)
 		};
 
-		var isUndefined = function(key){
-			return !und.has(knownParams, key);
-		};
+        var isKnownParam = und.partial(und.has, knownParams);
 
-		var unknownParam = und.find(["P", "V", "n", "T"], isUndefined);
+		var unknownParam = und.chain(["P", "V", "n", "T"]).
+            reject(isKnownParam).
+            first().
+            value();
 
 		return map[unknownParam];
 

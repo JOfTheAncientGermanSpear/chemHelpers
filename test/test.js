@@ -1,10 +1,12 @@
 var assert = require("assert");
 
-describe('Array', function(){
-    describe('#indexOf()', function(){
-        it('should return -1 when the value is not present', function(){
-            assert.equal(-1, [1,2,3].indexOf(5));
-		    assert.equal(-1, [1,2,3].indexOf(0));
-		})
+var chemHelpers = require("../src/chemHelpers.js");
+
+describe('Chem Helpers', function(){
+    describe('string to elements', function(){
+        it('should return {H: 2, O: 1} from "H2O"', function(){
+            assert.equal(1, chemHelpers.stringToElements("H2O")['O']);
+            assert.equal(2, chemHelpers.stringToElements("H2O")['H']);
+        })
     })
 });
