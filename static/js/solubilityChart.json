@@ -1,0 +1,50 @@
+{
+    "Li": {
+        "Cl": "S", "Br": "S", "I":"S", "CO32":"S", "ClO3": null, "OH": "S", "NO3": "S", "O2":"X", "PO43":null, "SO42": "S", "Cr2O72": null
+    },
+    "Na": {
+        "Cl": "S", "Br": "S", "I":"S", "CO32":"S", "ClO3": "S", "OH": "S", "NO3": "S", "O2":"X", "PO43":"S", "SO42": "S", "Cr2O72": "S"
+    },
+    "K": {
+        "Cl": "S", "Br": "S", "I":"S", "CO32":"S", "ClO3": "S", "OH": "S", "NO3": "S", "O2":"X", "PO43":"S", "SO42": "S", "Cr2O72": "S"
+    },
+    "Ag": {
+        "Cl": "I", "Br": "I", "I":"I", "CO32":"I", "ClO3": "S", "OH": "X", "NO3": "S", "O2":"I", "PO43":"I", "SO42": "sS", "Cr2O72": "I"
+    },
+    "NH4": {
+        "Cl": "S", "Br": "S", "I":"S", "CO32":"S", "ClO3": "S", "OH": "S", "NO3": "S", "O2":"X", "PO43":"S", "SO42": "S", "Cr2O72": "S"
+    },
+    "Be2": {
+        "Cl": "S", "Br": "S", "I":"X", "CO32":null, "ClO3": null, "OH": null, "NO3": "S", "O2":"I", "PO43":null, "SO42": "S", "Cr2O72": null
+    },
+    "Mg2": {
+        "Cl": "S", "Br": "S", "I":"S", "CO32":"I", "ClO3": "S", "OH": "I", "NO3": "S", "O2":"I", "PO43":"I", "SO42": "S", "Cr2O72": "I"
+    },
+    "Ca2": {
+        "Cl": "S", "Br": "S", "I":"S", "CO32":"I", "ClO3": "S", "OH": "sS", "NO3": "S", "O2":"X", "PO43":"I", "SO42": "sS", "Cr2O72": "I"
+    },
+    "Sr2": {
+        "Cl": "S", "Br": "S", "I":"S", "CO32":"I", "ClO3": "S", "OH": "S", "NO3": "S", "O2":"X", "PO43":null, "SO42": "I", "Cr2O72": null
+    },
+    "Ba2": {
+        "Cl": "S", "Br": "S", "I":"S", "CO32":"I", "ClO3": "S", "OH": "S", "NO3": "S", "O2":"X", "PO43":null, "SO42": "I", "Cr2O72": null
+    },
+    "Zn2": {
+        "Cl": "S", "Br": "S", "I":"S", "CO32":"I", "ClO3": "S", "OH": "I", "NO3": "S", "O2":"I", "PO43":"I", "SO42": "S", "Cr2O72": "I"
+    },
+    "Fe2": {
+        "Cl": "S", "Br": "S", "I":null, "CO32":"I", "ClO3": "S", "OH": "I", "NO3": "S", "O2":"I", "PO43":"I", "SO42": "S", "Cr2O72": "I"
+    },
+    "Cu2": {
+        "Cl": "S", "Br": "S", "I":null, "CO32":"I", "ClO3": "S", "OH": "I", "NO3": "S", "O2":"I", "PO43":"I", "SO42": "S", "Cr2O72": "I"
+    },
+    "Al3": {
+        "Cl": "S", "Br": "S", "I":"X", "CO32":null, "ClO3": "S", "OH": "I", "NO3": "S", "O2":"I", "PO43":"I", "SO42": "S", "Cr2O72": "I"
+    },
+    "Fe3": {
+        "Cl": "S", "Br": "S", "I":null, "CO32":"X", "ClO3": "S", "OH": "I", "NO3": "S", "O2":"I", "PO43":"I", "SO42": "sS", "Cr2O72": "I"
+    },
+    "Pb2": {
+        "Cl": "sS", "Br": "sS", "I":"I", "CO32":"I", "ClO3": null, "OH": "I", "NO3": "S", "O2":"I", "PO43":null, "SO42": "I", "Cr2O72": null
+    }
+}
