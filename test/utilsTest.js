@@ -40,5 +40,22 @@ describe('Utils', function(){
             var expected = [0, 1, 2, 1, 2, 3, 2, 3, 4];
             assert.deepEqual(expected, utils.flatMap(input, fn));
         })
+    });
+    describe('add dimension', function(){
+        it('should return a matrix with columns for every new element', function(){
+            var dimensions = [
+                [1],
+                [2]
+            ];
+            var newDimension = ['a', 'b'];
+            var expected = [
+                [1, 'a'],
+                [1, 'b'],
+                [2, 'a'],
+                [2, 'b']
+            ];
+            var actual = utils.addDimension(dimensions, newDimension);
+            assert.deepEqual(expected, actual);
+        })
     })
 });

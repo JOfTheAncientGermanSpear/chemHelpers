@@ -49,6 +49,12 @@ var splitConcat = function(array1, array2) {
     return und.map(array2, concat);
 };
 
+var addDimension = function(dimensions, newDimension){
+    return flatMap(dimensions, function(d){
+        return splitConcat(d, newDimension);
+    });
+};
+
 var flatMap = function(array, fn, depth) {
     return und.flatten(und.map(array, fn), depth ? depth : 1);
 };
@@ -57,5 +63,6 @@ module.exports = {
     stringToElements: stringToElements,
     splitConcat: splitConcat,
     symsAndCoeffsMap: symsAndCoeffsMap,
-    flatMap: flatMap
+    flatMap: flatMap,
+    addDimension: addDimension
 };
