@@ -96,31 +96,14 @@ var idealGasTemp = function(params) {
 
 var idealGasLaw = function(knownParams){
 
-	function getFnForUnknownParam(){
+    var fnMap = {
+        P: idealGasPressure,
+        V: idealGasVolume,
+        n: idealGasMoles,
+        T: idealGasTemp
+    };
 
-        function curryKnownParams(fn){
-            return und.partial(fn, knownParams);
-        }
-
-		var fnMap = {
-			P: idealGasPressure,
-			V: idealGasVolume,
-			n: idealGasMoles,
-			T: idealGasTemp
-		};
-
-        var isKnownParam = curryKnownParams(und.has);
-
-		var unknownParam = und.chain(["P", "V", "n", "T"]).
-            reject(isKnownParam).
-            first().
-            value();
-
-		return curryKnownParams(fnMap[unknownParam]);
-
-	}
-
-	var missingParamFn = getFnForUnknownParam();
+	var missingParamFn = utils.getFunctionForMissingParam(fnMap, knownParams);
 
 	return missingParamFn();
 };
