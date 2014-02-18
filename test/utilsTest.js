@@ -30,5 +30,15 @@ describe('Utils', function(){
             };
             assert.deepEqual(expected, utils.symsAndCoeffsMap('a', 1, 'b', 2));
         })
+    });
+    describe('flat map', function(){
+        it('should return a single array instead of array of arrays, even if mapping function returns an array', function(){
+            var input = [1, 2, 3];
+            var fn = function(e){
+                return [e -1, e, e + 1];
+            };
+            var expected = [0, 1, 2, 1, 2, 3, 2, 3, 4];
+            assert.deepEqual(expected, utils.flatMap(input, fn));
+        })
     })
 });
