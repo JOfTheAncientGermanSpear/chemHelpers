@@ -146,6 +146,8 @@ var solubilityLookup = function(catIon, anIon) {
 };
 
 var atomCharges = function(molecularFormula, moleculeCharge){
+    moleculeCharge = moleculeCharge ? moleculeCharge : 1;
+
     function stringToCharges(string){
         var strings = string.split(",");
         return und.map(strings, function(s){return parseInt(s);});
@@ -153,18 +155,26 @@ var atomCharges = function(molecularFormula, moleculeCharge){
 
     var compound = utils.stringToElements(molecularFormula);
 
-    var charges = und.map(compound, function(elemCoefficient, elemSym){
-        function appendElementSymbol(charge){
-            var ret = {};
-            ret[elemSym] = charge;
-            return ret;
+    var possibleSolutions = und.reduce(compound, function(dimensions, elemCoefficient, elemSym){
+        function appendElementInfo(charge){
+            return { element: elemSym,
+                charge: charge,
+                chargeMultiplier: elemCoefficient }
         }
         var element = elements[elemSym];
         var elementCharges = stringToCharges(element.oxidation_states);
-        return und.map(elementCharges, appendElementSymbol);
-    });
+        var newDimension = und.map(elementCharges, appendElementInfo);
+        return utils.addDimension(dimensions, newDimension);
+    }, [[]]);
 
-    return charges;
+    var isSolution = function(possibleSolution){
+        var solutionCharge = und.reduce(possibleSolution, function(acc, elem){
+            return acc + elem.charge * elem.chargeMultiplier;
+        }, 0);
+        return solutionCharge == moleculeCharge;
+    };
+
+    return und.filter(possibleSolutions, isSolution);
 };
 
 module.exports = {
