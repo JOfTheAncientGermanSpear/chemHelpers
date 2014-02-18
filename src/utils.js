@@ -59,10 +59,26 @@ var flatMap = function(array, fn, depth) {
     return und.flatten(und.map(array, fn), depth ? depth : 1);
 };
 
+var getFunctionForUnkownParam = function(fnMap, paramKeys, params){
+    function curryKnownParams(fn){
+        return und.partial(fn, params);
+    }
+
+    var isKnownParam = curryKnownParams(und.has);
+
+    var unknownParam = und.chain(paramKeys).
+        reject(isKnownParam).
+        first().
+        value();
+
+    return curryKnownParams(fnMap[unknownParam]);
+};
+
 module.exports = {
     stringToElements: stringToElements,
     splitConcat: splitConcat,
     symsAndCoeffsMap: symsAndCoeffsMap,
     flatMap: flatMap,
-    addDimension: addDimension
+    addDimension: addDimension,
+    getFunctionForUnknownParam: getFunctionForUnkownParam
 };

@@ -57,5 +57,24 @@ describe('Utils', function(){
             var actual = utils.addDimension(dimensions, newDimension);
             assert.deepEqual(expected, actual);
         })
+    });
+    describe('get function for unknown param', function(){
+        it('should return the function to calculate the unknown param', function(){
+            var fnMap = {
+                a: function(params){
+                    return params.b * 2;
+                },
+                b: function(params) {
+                    return params.a * 3;
+                }
+            };
+            var params = {
+                b: 3
+            };
+            var expected = 6;
+            var paramKeys = ['a', 'b'];
+            var fn = utils.getFunctionForUnknownParam(fnMap, paramKeys, params);
+            assert.equal(expected, fn());
+        })
     })
 });
