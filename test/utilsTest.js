@@ -17,11 +17,19 @@ describe('Utils', function(){
             var actual = utils.splitConcat(array1, array2);
             assert.deepEqual(expected, actual);
         });
-        it('should return an array split into single element arrays when concatenated []', function(){
+        it('should return an array split into single element arrays when concatenated against []', function(){
             var input = [1, 2, 3];
             var expected = [ [1], [2], [3] ];
             var actual = utils.splitConcat([], input);
             assert.deepEqual(expected, actual);
+        })
+    });
+    describe('syms and coeffs map', function(){
+        it('should create an object from two arrays, even as keys and odd as values', function(){
+            var expected = {
+                a: 1, b: 2
+            };
+            assert.deepEqual(expected, utils.symsAndCoeffsMap('a', 1, 'b', 2));
         })
     })
 });
