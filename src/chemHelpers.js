@@ -97,7 +97,7 @@ var empiricalFormula = function(){
 	var massPercents = symsAndCoeffsMap.apply(null, argsArray);
 
 	var coeffs = und.reduce(massPercents, function(acc, percent, elemSym){
-		var mass = molarMass(elemSym, 1);
+		var mass = molarMass(elemSym + 1);
 		acc[elemSym] = percent/mass;
 		return acc;
 	}, {});
@@ -187,16 +187,29 @@ var solubilityLookup = function(catIon, anIon) {
     return solubilityChart[catIon][anIon];
 };
 
-var atomCharges = function(molecularFormula, overallCharge){
+var splitConcat = function(array1, array2) {
+    function concat(a) { return array1.concat(a); }
+    return und.map(array2, concat);
+};
+
+var atomCharges = function(molecularFormula, moleculeCharge){
     function stringToCharges(string){
         var strings = string.split(",");
         return und.map(strings, function(s){return parseInt(s);});
-    };
+    }
 
     var compound = stringToElements(molecularFormula);
-    var charges = und.reduce(compound, function(acc, elem){
-        acc[elem.symbol] = stringToCharges(elem.oxidation_states);
-    }, {});
+
+    var charges = und.map(compound, function(elemCoefficient, elemSym){
+        function appendElementSymbol(charge){
+            var ret = {};
+            ret[elemSym] = charge;
+            return ret;
+        }
+        var element = elements[elemSym];
+        var elementCharges = stringToCharges(element.oxidation_states);
+        return und.map(elementCharges, appendElementSymbol);
+    });
 
     return charges;
 };
@@ -213,5 +226,7 @@ module.exports = {
 	unitConversions: unitConversions,
 	mercuryHeightToAtm: mercuryHeightToAtm,
     solubilityLookup: solubilityLookup,
-    stringToElements: stringToElements
+    stringToElements: stringToElements,
+    atomCharges: atomCharges,
+    splitConcat: splitConcat
 };
