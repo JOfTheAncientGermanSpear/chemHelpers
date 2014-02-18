@@ -59,15 +59,14 @@ var flatMap = function(array, fn, depth) {
     return und.flatten(und.map(array, fn), depth ? depth : 1);
 };
 
-var getFunctionForUnkownParam = function(fnMap, paramKeys, params){
+var getFunctionForMissingParam = function(fnMap, params){
     function curryKnownParams(fn){
         return und.partial(fn, params);
     }
 
-    var isKnownParam = curryKnownParams(und.has);
-
-    var unknownParam = und.chain(paramKeys).
-        reject(isKnownParam).
+    var unknownParam = und.chain(fnMap).
+        keys().
+        difference(und.keys(params)).
         first().
         value();
 
@@ -80,5 +79,5 @@ module.exports = {
     symsAndCoeffsMap: symsAndCoeffsMap,
     flatMap: flatMap,
     addDimension: addDimension,
-    getFunctionForUnknownParam: getFunctionForUnkownParam
+    getFunctionForMissingParam: getFunctionForMissingParam
 };

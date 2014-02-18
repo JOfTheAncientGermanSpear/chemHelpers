@@ -72,8 +72,7 @@ describe('Utils', function(){
                 b: 3
             };
             var expected = 6;
-            var paramKeys = ['a', 'b'];
-            var fn = utils.getFunctionForUnknownParam(fnMap, paramKeys, params);
+            var fn = utils.getFunctionForMissingParam(fnMap, params);
             assert.equal(expected, fn());
         })
     })
