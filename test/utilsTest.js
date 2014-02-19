@@ -73,7 +73,8 @@ describe('Utils', function(){
             };
             var expected = 6;
             var fn = utils.getFunctionForMissingParam(fnMap, params);
-            assert.equal(expected, fn());
+            assert.equal(expected, fn().result);
+            assert.equal('a', fn().calculated_for)
         })
     })
 });

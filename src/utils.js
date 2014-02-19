@@ -70,7 +70,12 @@ var getFunctionForMissingParam = function(fnMap, params){
         first().
         value();
 
-    return curryKnownParams(fnMap[unknownParam]);
+    return function(){
+        return {
+            calculated_for: unknownParam,
+            result: curryKnownParams(fnMap[unknownParam])()
+        };
+    }
 };
 
 module.exports = {

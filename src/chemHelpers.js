@@ -160,6 +160,32 @@ var atomCharges = function(molecularFormula, moleculeCharge){
     return und.filter(possibleSolutions, isSolution);
 };
 
+
+var freezingPointDepressionKf = function(params){
+    return -1 * params.dTf/params.m;
+};
+
+var freezingPointDepressionMolality = function(params){
+    return -1 * params.Tf / params.Kf
+};
+
+var freezingPointDepressionTf = function(params){
+    return -1 * params.Kf * params.m;
+};
+
+var freezingPointDepression = function(knownParams){
+
+    var fnMap = {
+        Kf: freezingPointDepressionKf,
+        m: freezingPointDepressionMolality,
+        Tf: freezingPointDepressionTf
+    };
+
+    var missingParamFn = utils.getFunctionForMissingParam(fnMap, knownParams);
+
+    return missingParamFn();
+};
+
 module.exports = {
 	molarMass: molarMass,
 	percentComposition: percentComposition,
@@ -172,5 +198,6 @@ module.exports = {
 	unitConversions: unitConversions,
 	mercuryHeightToAtm: mercuryHeightToAtm,
     solubilityLookup: solubilityLookup,
-    atomCharges: atomCharges
+    atomCharges: atomCharges,
+    freezingPointDepression: freezingPointDepression
 };
