@@ -277,5 +277,6 @@ module.exports = {
     molarityToMolality: molarityToMolality,
     molalityToMolarity: molalityToMolarity,
     moleFractionsFromMass: moleFractionsFromMass,
-    percentError: percentError
+    percentError: percentError,
+    elements: utils.mapToFunction(elements)
 };
