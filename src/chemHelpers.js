@@ -228,6 +228,29 @@ var percentMass = function(params){
 	return params.soluteMass / solutionMass * 100;
 };
 
+var numberOfMoles = function(molecule, totalMass){
+	return totalMass / molarMass(molecule);
+};
+
+var moleFractionsFromMass = function(moleculeMassMap){
+	var moleculeMoles = und.reduce(moleculeMassMap, 
+		function(acc, mass, molecule){
+			var numOfMoles = mass / molarMass(molecule);
+			acc[molecule] = numOfMoles;
+			return acc;
+		}, {}
+		);
+
+	var totalMoles = und.reduce(moleculeMoles, function(acc, numOfMoles){
+		return acc + numOfMoles;
+	}, 0);
+
+	return und.reduce(moleculeMoles, function(acc, numOfMoles, molecule){
+		acc[molecule] = numOfMoles/totalMoles;
+		return acc;
+	}, {});
+};
+
 module.exports = {
 	molarMass: molarMass,
 	percentComposition: percentComposition,
@@ -246,5 +269,6 @@ module.exports = {
     percentMass: percentMass,
     percentMassToMolality: percentMassToMolality,
     molarityToMolality: molarityToMolality,
-    molalityToMolarity: molalityToMolarity
+    molalityToMolarity: molalityToMolarity,
+    moleFractionsFromMass: moleFractionsFromMass
 };
