@@ -193,18 +193,32 @@ var molalityToPercentMass = function(molecule, molality){
 	return mass/massSolution * 100;
 };
 
-var percentMassToMolality = function(molecule, percentMass){
-	var mass = percentMass/100 * 1000;
+var percentMassToMolality = function(molecule, percentMass, solutionDensity){
+	//assume solution volume is 1 L
+	solutionDensity = solutionDensity ? solutionDensity : 1;
+	var solutionMassKg = solutionDensity;
+	var mass = percentMass/100 * solutionMassKg * 1000;
 	var Mm = molarMass(molecule);
 	var moles = mass/Mm;
-	var solventMassKg = 1 - mass/1000;
+	var solventMassKg = solutionMassKg - mass/1000;
 	return moles/solventMassKg;
+};
+
+var molalityToMolarity = function(molecule, m, solutionDensity){
+	var solventMassKg = 1;
+	var moles = m;
+	solutionDensity = solutionDensity ? solutionDensity : 1;
+	var soluteMass = moles * molarMass(molecule);
+	var solutionMassKg = solventMassKg + soluteMass/1000;
+	var solutionVolume = solutionMassKg / solutionDensity;
+	return moles/solutionVolume;
 };
 
 var molarityToMolality = function(molecule, M, solutionDensity){
 	var moles = M;
 	var mass = moles * molarMass(molecule);
-	var solventMassKg = solutionDensity - mass/1000;
+	var solutionMass = solutionDensity ? solutionDensity : 1;
+	var solventMassKg = solutionMass - mass/1000;
 	return moles/solventMassKg;
 };
 
@@ -231,5 +245,6 @@ module.exports = {
     molalityToPercentMass: molalityToPercentMass,
     percentMass: percentMass,
     percentMassToMolality: percentMassToMolality,
-    molarityToMolality: molarityToMolality
+    molarityToMolality: molarityToMolality,
+    molalityToMolarity: molalityToMolarity
 };
