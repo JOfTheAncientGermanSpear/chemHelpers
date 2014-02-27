@@ -186,6 +186,34 @@ var freezingPointDepression = function(knownParams){
     return missingParamFn();
 };
 
+var molalityToPercentMass = function(molecule, molality){
+	var Mm = molarMass(molecule);
+	var mass = molality * Mm;
+	var massSolution = 1000 + mass;
+	return mass/massSolution * 100;
+};
+
+var percentMassToMolality = function(molecule, percentMass){
+	var mass = percentMass/100 * 1000;
+	var Mm = molarMass(molecule);
+	var moles = mass/Mm;
+	var solventMassKg = 1 - mass/1000;
+	return moles/solventMassKg;
+};
+
+var molarityToMolality = function(molecule, M, solutionDensity){
+	var moles = M;
+	var mass = moles * molarMass(molecule);
+	var solventMassKg = solutionDensity - mass/1000;
+	return moles/solventMassKg;
+};
+
+var percentMass = function(params){
+	var solutionMass = params.solutionMass ? params.solutionMass :
+		params.solventMass + params.soluteMass;
+	return params.soluteMass / solutionMass * 100;
+};
+
 module.exports = {
 	molarMass: molarMass,
 	percentComposition: percentComposition,
@@ -199,5 +227,9 @@ module.exports = {
 	mercuryHeightToAtm: mercuryHeightToAtm,
     solubilityLookup: solubilityLookup,
     atomCharges: atomCharges,
-    freezingPointDepression: freezingPointDepression
+    freezingPointDepression: freezingPointDepression,
+    molalityToPercentMass: molalityToPercentMass,
+    percentMass: percentMass,
+    percentMassToMolality: percentMassToMolality,
+    molarityToMolality: molarityToMolality
 };
