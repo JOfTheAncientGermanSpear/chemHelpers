@@ -225,7 +225,9 @@ var molarityToMolality = function(molecule, M, solutionDensity){
 var percentMass = function(params){
 	var solutionMass = params.solutionMass ? params.solutionMass :
 		params.solventMass + params.soluteMass;
-	return params.soluteMass / solutionMass * 100;
+	var soluteMass = params.soluteMass ? params.soluteMass :
+		chemHelpers.molarMass(params.soluteMolecule) * params.soluteMoles;
+	return soluteMass / solutionMass * 100;
 };
 
 var numberOfMoles = function(molecule, totalMass){
@@ -251,6 +253,10 @@ var moleFractionsFromMass = function(moleculeMassMap){
 	}, {});
 };
 
+var percentError = function(theoretical, actual){
+	return Math.abs(theoretical - actual)/actual * 100;
+};
+
 module.exports = {
 	molarMass: molarMass,
 	percentComposition: percentComposition,
@@ -270,5 +276,6 @@ module.exports = {
     percentMassToMolality: percentMassToMolality,
     molarityToMolality: molarityToMolality,
     molalityToMolarity: molalityToMolarity,
-    moleFractionsFromMass: moleFractionsFromMass
+    moleFractionsFromMass: moleFractionsFromMass,
+    percentError: percentError
 };
