@@ -257,6 +257,13 @@ var percentError = function(theoretical, actual){
 	return Math.abs(theoretical - actual)/actual * 100;
 };
 
+var dissolve = function(params){
+	var initialConcentration = params.initialConcentration;
+	var originalVolume = params.originalVolume;
+	var newVolume = params.newVolume ? params.newVolume : params.addedVolume + params.originalVolume;
+	return initialConcentration * originalVolume / newVolume;
+};
+
 module.exports = {
 	molarMass: molarMass,
 	percentComposition: percentComposition,
@@ -278,5 +285,6 @@ module.exports = {
     molalityToMolarity: molalityToMolarity,
     moleFractionsFromMass: moleFractionsFromMass,
     percentError: percentError,
-    elements: utils.mapToFunction(elements)
+    elements: utils.mapToFunction(elements),
+    dissolve: dissolve
 };
