@@ -78,11 +78,18 @@ var getFunctionForMissingParam = function(fnMap, params){
     }
 };
 
+var mapToFunction = function(map){
+    return function(input){
+        return map[input];
+    };
+};
+
 module.exports = {
     stringToElements: stringToElements,
     splitConcat: splitConcat,
     symsAndCoeffsMap: symsAndCoeffsMap,
     flatMap: flatMap,
     addDimension: addDimension,
-    getFunctionForMissingParam: getFunctionForMissingParam
+    getFunctionForMissingParam: getFunctionForMissingParam,
+    mapToFunction: mapToFunction
 };
