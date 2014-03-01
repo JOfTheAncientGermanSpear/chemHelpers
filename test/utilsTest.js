@@ -83,6 +83,11 @@ describe('Utils', function(){
             var q = {a: 2, b: 3};
             assert.equal(6, abMultipiler(q));
         });
+        it('should treat number inputs as constants', function(){
+            var by2 = utils.multiplier('a', 2);
+            var q = {a: 2};
+            assert.equal(4, by2(q));
+        });
     });
     describe('divider', function(){
         it('should divide numerator by denomenator', function(){
@@ -93,6 +98,11 @@ describe('Utils', function(){
             };
             var expected = 2;
             assert.equal(expected, divider(q));
+        });
+        it('should treat number inputs as constants', function(){
+            var by2 = utils.divider(['a'], [2]);
+            var q = {a: 2};
+            assert.equal(1, by2(q));
         });
     });
 });

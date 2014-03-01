@@ -93,9 +93,12 @@ var negater = function(fn){
 var multiplier = function(/*keys*/){
     var keys = und.toArray(arguments);
     return function(inputObj){
+        var accumulator = function(acc, key){
+            return acc * (und.isNumber(key) ? key : inputObj[key]);
+        };
         return inputObj ?
             und.reduce(keys,
-                function(acc, key){ return acc * inputObj[key];}, 
+                accumulator, 
                 1)
             : undefined;
     }
