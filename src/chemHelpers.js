@@ -186,6 +186,31 @@ var freezingPointDepression = function(knownParams){
     return missingParamFn();
 };
 
+var boilingPointElevation_Kb = function(params){
+	return params.dTb/params.m;
+};
+
+var boilingPointElevation_m = function(params){
+	return params.dTb / params.Kb;
+};
+
+var boilingPointElevation_dTb = function(params){
+	return params.Kb * params.m;
+};
+
+var boilingPointElevation = function(knownParams){
+	var fnMap = {
+		Kb: boilingPointElevationKb,
+		m: boilingPointElevationMolality,
+		Tb: boilingPointElevationTb
+	};
+
+	var missingParamFn = utils.getFunctionForMissingParam(fnMap, knownParams);
+
+    return missingParamFn();
+
+};
+
 var molalityToPercentMass = function(molecule, molality){
 	var Mm = molarMass(molecule);
 	var mass = molality * Mm;
@@ -286,5 +311,7 @@ module.exports = {
     moleFractionsFromMass: moleFractionsFromMass,
     percentError: percentError,
     elements: utils.mapToFunction(elements),
-    dissolve: dissolve
+    dissolve: dissolve,
+    numberOfMoles: numberOfMoles,
+    boilingPointElevation: boilingPointElevation
 };
