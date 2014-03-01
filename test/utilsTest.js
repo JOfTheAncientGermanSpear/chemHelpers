@@ -76,5 +76,23 @@ describe('Utils', function(){
             assert.equal(expected, fn().result);
             assert.equal('a', fn().calculated_for)
         })
-    })
+    });
+    describe('multilpier', function(){
+        it('should multiply labeled keys of an object', function(){
+            var abMultipiler = utils.multiplier('a', 'b');
+            var q = {a: 2, b: 3};
+            assert.equal(6, abMultipiler(q));
+        });
+    });
+    describe('divider', function(){
+        it('should divide numerator by denomenator', function(){
+            var divider = utils.divider(['a', 'b'], ['c', 'd']);
+            var q = {
+                a: 3, b: 4,
+                c: 2, d: 3
+            };
+            var expected = 2;
+            assert.equal(expected, divider(q));
+        });
+    });
 });
