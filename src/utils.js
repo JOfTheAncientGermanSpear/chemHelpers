@@ -84,9 +84,9 @@ var mapToFunction = function(map){
     };
 };
 
-var negate = function(fn){
+var negater = function(fn){
     return function(params){
-        return -1 * fn.apply(null, params);
+        return -1 * fn(params);
     };
 };
 
@@ -119,5 +119,6 @@ module.exports = {
     getFunctionForMissingParam: getFunctionForMissingParam,
     mapToFunction: mapToFunction,
     multiplier: multiplier,
-    divider: divider
+    divider: divider,
+    negater: negater
 };
