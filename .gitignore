@@ -2,3 +2,6 @@ node_modules
 *.iml
 .idea
 *.log
+
+*.sublime-project
+*.sublime-workspace
