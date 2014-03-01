@@ -77,22 +77,14 @@ var idealGasPressure = function(params) {
 	return  params.n * R * params.T /params.V;
 };
 
-var idealGasVolume = function(params){
-	//V = nRT/P
-    //var paramsHave = und.bind(und.has, params);
-    //if(paramsHave("n") && paramsHave("T") && paramsHave("P"))
-	return  params.n * R * params.T/params.P;
-};
+//V = nRT/P
+var idealGasVolume = utils.divider(['n', R, 'T'], ['P']);
 
-var idealGasMoles = function(params) {
-	//n = PV/RT
-	return  params.P * params.V / (R * params.T);
-};
+//n = PV/RT
+var idealGasMoles = utils.divider(['P', 'V'], [R, 'T']);
 
-var idealGasTemp = function(params) {
-	//T = PV/nR
-	return params.P * params.V/ (R * params.n);
-};
+//T = PV/nR
+var idealGasTemp = utils.divider(['P', 'V'], [R, 'n']);
 
 var idealGasLaw = function(knownParams){
 
