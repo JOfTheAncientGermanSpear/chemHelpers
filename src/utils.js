@@ -84,6 +84,32 @@ var mapToFunction = function(map){
     };
 };
 
+var negate = function(fn){
+    return function(params){
+        return -1 * fn.apply(null, params);
+    };
+};
+
+var multiplier = function(/*keys*/){
+    var keys = und.toArray(arguments);
+    return function(inputObj){
+        return inputObj ?
+            und.reduce(keys,
+                function(acc, key){ return acc * inputObj[key];}, 
+                1)
+            : undefined;
+    }
+};
+
+var divider = function(nums, denoms){
+    var numMutliplier = multiplier.apply(null, nums);
+    var denomMultiplier = multiplier.apply(null, denoms);
+
+    return function(inputObj){
+        return numMutliplier(inputObj) / denomMultiplier(inputObj);
+    };
+};
+
 module.exports = {
     stringToElements: stringToElements,
     splitConcat: splitConcat,
@@ -91,5 +117,7 @@ module.exports = {
     flatMap: flatMap,
     addDimension: addDimension,
     getFunctionForMissingParam: getFunctionForMissingParam,
-    mapToFunction: mapToFunction
+    mapToFunction: mapToFunction,
+    multiplier: multiplier,
+    divider: divider
 };
