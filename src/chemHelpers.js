@@ -4,6 +4,8 @@ var pTable = require("./elements.json");
 
 var utils = require("./utils.js");
 
+var kbMap = require('./kbMap.json');
+
 var solubilityChart = require("./solubilityChart.json");
 
 var elements = und.reduce(pTable, function(acc, elem){
@@ -262,6 +264,19 @@ var percentError = function(theoretical, actual){
 	return Math.abs(theoretical - actual)/actual * 100;
 };
 
+var density = function(knownParams){
+	//d = m/V
+	var fnMap = {
+		m: utils.multiplier('d', 'V'),
+		V: utils.divider(['m'],['d']),
+		d: utils.divider(['m'],['V'])
+	};
+
+	var missingParamFn = utils.getFunctionForMissingParam(fnMap, knownParams);
+
+    return missingParamFn();
+};
+
 var dissolve = function(params){
 	var initialConcentration = params.initialConcentration;
 	var originalVolume = params.originalVolume;
@@ -293,5 +308,7 @@ module.exports = {
     elements: utils.mapToFunction(elements),
     dissolve: dissolve,
     numberOfMoles: numberOfMoles,
-    boilingPointElevation: boilingPointElevation
+    boilingPointElevation: boilingPointElevation,
+    kbMap: kbMap,
+    density: density
 };
