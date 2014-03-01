@@ -153,24 +153,18 @@ var atomCharges = function(molecularFormula, moleculeCharge){
 };
 
 
-var freezingPointDepressionKf = function(params){
-    return -1 * params.dTf/params.m;
-};
+var freezingPointDepression_Kf = utils.divider([-1, 'dTf'], ['m']);
 
-var freezingPointDepressionMolality = function(params){
-    return -1 * params.Tf / params.Kf
-};
+var freezingPointDepression_m = utils.divider([-1, 'dTf'], ['Kf']);
 
-var freezingPointDepressionTf = function(params){
-    return -1 * params.Kf * params.m;
-};
+var freezingPointDepression_dTf = utils.multiplier(-1, 'Kf', 'm');
 
 var freezingPointDepression = function(knownParams){
 
     var fnMap = {
-        Kf: freezingPointDepressionKf,
-        m: freezingPointDepressionMolality,
-        Tf: freezingPointDepressionTf
+        Kf: freezingPointDepression_Kf,
+        m: freezingPointDepression_m,
+        dTf: freezingPointDepression_dTf
     };
 
     var missingParamFn = utils.getFunctionForMissingParam(fnMap, knownParams);
@@ -178,23 +172,17 @@ var freezingPointDepression = function(knownParams){
     return missingParamFn();
 };
 
-var boilingPointElevation_Kb = function(params){
-	return params.dTb/params.m;
-};
+var boilingPointElevation_Kb = utils.divider(['dTb'], ['m']);
 
-var boilingPointElevation_m = function(params){
-	return params.dTb / params.Kb;
-};
+var boilingPointElevation_m = utils.divider(['dTb'], ['Kb']);
 
-var boilingPointElevation_dTb = function(params){
-	return params.Kb * params.m;
-};
+var boilingPointElevation_dTb = utils.multiplier('Kb', 'm');
 
 var boilingPointElevation = function(knownParams){
 	var fnMap = {
-		Kb: boilingPointElevationKb,
-		m: boilingPointElevationMolality,
-		Tb: boilingPointElevationTb
+		Kb: boilingPointElevation_Kb,
+		m: boilingPointElevation_m,
+		dTb: boilingPointElevation_dTb
 	};
 
 	var missingParamFn = utils.getFunctionForMissingParam(fnMap, knownParams);
