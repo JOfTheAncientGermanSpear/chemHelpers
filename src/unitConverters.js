@@ -1,3 +1,5 @@
+var und = require('underscore');
+
 var re = /^([0-9][0-9]*(?:\.[0-9]+)?) ?([a-zA-Z]+)/i
 var metricUnitRe = /^(T|G|M|k|h|da|g|c|m|mu|n|p)[a-zA-Z]$/
 
@@ -17,7 +19,13 @@ var metricMap = {
 	"p": .000001
 };
 
-var gramMap = metricMap;
+var gramMap = und.extend(
+	{
+		"oz": 453.5923/16,
+		"lb": 453.5923
+
+	},
+	metricMap);
 
 var metricUnit = function(unit){
 	return metricUnitRe.test(unit) ? unit.match(metricUnitRe)[1] : undefined;
