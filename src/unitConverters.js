@@ -10,7 +10,6 @@ var metricMap = {
 	"k": 1000,
 	"h": 100,
 	"da": 10,
-	"g": 1,
 	"d": .1,
 	"c": .01,
 	"m": .001,
@@ -22,7 +21,8 @@ var metricMap = {
 var gramMap = und.extend(
 	{
 		"oz": 453.5923/16,
-		"lb": 453.5923
+		"lb": 453.5923,
+		"g": 1
 
 	},
 	metricMap);
