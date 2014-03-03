@@ -14,4 +14,9 @@ describe('Unit Converters', function(){
 			assert.equal(453.5923, unitConverters.mass("1 lb", "g"));
 		});
 	});
+	describe('temperature', function(){
+		it('should convert C to f', function(){
+			assert.equal(212, unitConverters.temperature("100 C", "f"));
+		});
+	});
 });

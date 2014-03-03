@@ -48,6 +48,18 @@ var pascalMap = und.extend(
 
 var timeMap = und.extend({s: 1}, suffixMetricMap('s'));
 
+var fromCelciusMap = {
+	"K": function(C){ return C + 273.15; },
+	"f": function(C){ return 9/5 * C + 32},
+	"C": und.identity
+};
+
+var toCelciusMap = {
+	"K": function(K){ return K - 273.15; },
+	"f": function(f){ return 5/9 * (f - 32); },
+	"C": und.identity
+};
+
 var converter = function(conversionMap, type){
 	return function(input, newUnit) {
 		if (!re.test(input)){
@@ -60,9 +72,22 @@ var converter = function(conversionMap, type){
 	};
 };
 
+var temperatureConverter = function(temp, newUnit) {
+	var tempRe = /([0-9]+(?:\.[0-9]+)?) *([CKf])/
+	if (!tempRe.test(temp)){
+		throw(temp + ' is not a valid temperature');
+	}
+	var resArray = temp.match(tempRe);
+	var value = Number(resArray[1]);
+	var oldUnit = resArray[2];
+	var inCelcius = toCelciusMap[oldUnit](value);
+	return fromCelciusMap[newUnit](inCelcius);
+};
+
 module.exports = {
 	mass: converter(gramMap, 'mass'),
 	volume: converter(literMap, 'volume'),
 	pressure: converter(pascalMap, 'pressure'),
-	time: converter(timeMap, 'time')
+	time: converter(timeMap, 'time'),
+	temperature: temperatureConverter
 }
