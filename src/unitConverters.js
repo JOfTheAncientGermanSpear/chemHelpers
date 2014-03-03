@@ -46,6 +46,8 @@ var pascalMap = und.extend(
 	},
 	suffixMetricMap('Pa'));
 
+var timeMap = und.extend({s: 1}, suffixMetricMap('s'));
+
 var converter = function(conversionMap, type){
 	return function(input, newUnit) {
 		if (!re.test(input)){
@@ -61,5 +63,6 @@ var converter = function(conversionMap, type){
 module.exports = {
 	mass: converter(gramMap, 'mass'),
 	volume: converter(literMap, 'volume'),
-	pressure: converter(pascalMap, 'pressure')
+	pressure: converter(pascalMap, 'pressure'),
+	time: converter(timeMap, 'time')
 }
