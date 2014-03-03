@@ -1,4 +1,4 @@
-var und = require('underscore');
+var _ = require('underscore');
 
 var re = /^([0-9][0-9]*(?:\.[0-9]+)?) ?([a-zA-Z]+)/i
 var metricUnitRe = /^(T|G|M|k|h|da|g|c|m|mu|n|p)[a-zA-Z]$/
@@ -19,13 +19,13 @@ var metricMap = {
 };
 
 var suffixMetricMap = function(suffix){
-	return und.reduce(metricMap, function(acc, val, key){
+	return _.reduce(metricMap, function(acc, val, key){
 		acc[key + suffix] = val;
 		return acc;
 	}, {});
 };
 
-var gramMap = und.extend(
+var gramMap = _.extend(
 	{
 		oz: 453.5923/16,
 		lb: 453.5923,
@@ -34,9 +34,9 @@ var gramMap = und.extend(
 	},
 	suffixMetricMap('g'));
 
-var literMap = und.extend({L: 1}, suffixMetricMap('L'));
+var literMap = _.extend({L: 1}, suffixMetricMap('L'));
 
-var pascalMap = und.extend(
+var pascalMap = _.extend(
 	{
 		atm: 1/101325,
 		Pa: 1,
@@ -46,18 +46,18 @@ var pascalMap = und.extend(
 	},
 	suffixMetricMap('Pa'));
 
-var timeMap = und.extend({s: 1}, suffixMetricMap('s'));
+var timeMap = _.extend({s: 1}, suffixMetricMap('s'));
 
 var fromCelciusMap = {
 	"K": function(C){ return C + 273.15; },
 	"f": function(C){ return 9/5 * C + 32},
-	"C": und.identity
+	"C": _.identity
 };
 
 var toCelciusMap = {
 	"K": function(K){ return K - 273.15; },
 	"f": function(f){ return 5/9 * (f - 32); },
-	"C": und.identity
+	"C": _.identity
 };
 
 var converter = function(conversionMap, type){

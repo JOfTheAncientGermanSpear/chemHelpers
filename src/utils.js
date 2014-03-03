@@ -1,4 +1,4 @@
-var und = require("underscore");
+var _ = require("underscore");
 
 var stringToElements = function(string){
 
@@ -35,18 +35,18 @@ var symsAndCoeffsMap = function(){
         return ix % 2 != 0;
     }
 
-    var argArray = und.toArray(arguments);
+    var argArray = _.toArray(arguments);
 
-    var symbols = und.filter(argArray, isEven);
+    var symbols = _.filter(argArray, isEven);
 
-    var coefficients = und.filter(argArray, isOdd);
+    var coefficients = _.filter(argArray, isOdd);
 
-    return und.object(symbols, coefficients);
+    return _.object(symbols, coefficients);
 };
 
 var splitConcat = function(array1, array2) {
     function concat(a) { return array1.concat(a); }
-    return und.map(array2, concat);
+    return _.map(array2, concat);
 };
 
 var addDimension = function(dimensions, newDimension){
@@ -56,17 +56,17 @@ var addDimension = function(dimensions, newDimension){
 };
 
 var flatMap = function(array, fn, depth) {
-    return und.flatten(und.map(array, fn), depth ? depth : 1);
+    return _.flatten(_.map(array, fn), depth ? depth : 1);
 };
 
 var getFunctionForMissingParam = function(fnMap, params){
     function curryKnownParams(fn){
-        return und.partial(fn, params);
+        return _.partial(fn, params);
     }
 
-    var unknownParam = und.chain(fnMap).
+    var unknownParam = _.chain(fnMap).
         keys().
-        difference(und.keys(params)).
+        difference(_.keys(params)).
         first().
         value();
 
@@ -91,13 +91,13 @@ var negater = function(fn){
 };
 
 var multiplier = function(/*keys*/){
-    var keys = und.toArray(arguments);
+    var keys = _.toArray(arguments);
     return function(inputObj){
         var accumulator = function(acc, key){
-            return acc * (und.isNumber(key) ? key : inputObj[key]);
+            return acc * (_.isNumber(key) ? key : inputObj[key]);
         };
         return inputObj ?
-            und.reduce(keys,
+            _.reduce(keys,
                 accumulator, 
                 1)
             : undefined;

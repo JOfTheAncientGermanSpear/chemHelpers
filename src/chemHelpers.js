@@ -1,4 +1,4 @@
-var und = require("underscore");
+var _ = require("underscore");
 
 var pTable = require("./elements.json");
 
@@ -8,7 +8,7 @@ var kbMap = require('./kbMap.json');
 
 var solubilityChart = require("./solubilityChart.json");
 
-var elements = und.reduce(pTable, function(acc, elem){
+var elements = _.reduce(pTable, function(acc, elem){
   acc[elem.symbol] = elem;
   return acc;
 }, {});
@@ -22,7 +22,7 @@ var molarMass = function(molecularFormula){
   	return acc + elemMass * elemCoefficient;
   };
 
-  return und.reduce(compound, addElemMass, 0);
+  return _.reduce(compound, addElemMass, 0);
 };
 
 var percentComposition = function(molecularFormula) {
@@ -45,7 +45,7 @@ var percentComposition = function(molecularFormula) {
 		return acc;
 	};
 
-	var percentCompositions = und.reduce(compound, appendElemInfo, {});
+	var percentCompositions = _.reduce(compound, appendElemInfo, {});
 	percentCompositions.totalMass = compoundMass;
 	
 	return percentCompositions;
@@ -53,18 +53,18 @@ var percentComposition = function(molecularFormula) {
 
 
 var empiricalFormula = function(){
-	var argsArray = und.toArray(arguments);
+	var argsArray = _.toArray(arguments);
 	var massPercents = utils.symsAndCoeffsMap.apply(null, argsArray);
 
-	var coeffs = und.reduce(massPercents, function(acc, percent, elemSym){
+	var coeffs = _.reduce(massPercents, function(acc, percent, elemSym){
 		var mass = molarMass(elemSym + 1);
 		acc[elemSym] = percent/mass;
 		return acc;
 	}, {});
 
-	var minimumCoeff = und.min(coeffs);
+	var minimumCoeff = _.min(coeffs);
 
-	return und.reduce(coeffs, function(acc, coeff, elemSym) {
+	return _.reduce(coeffs, function(acc, coeff, elemSym) {
 		acc[elemSym] = coeff / minimumCoeff;
 		return acc;
 	}, {});
@@ -127,12 +127,12 @@ var atomCharges = function(molecularFormula, moleculeCharge){
 
     function stringToCharges(string){
         var strings = string.split(",");
-        return und.map(strings, function(s){return parseInt(s);});
+        return _.map(strings, function(s){return parseInt(s);});
     }
 
     var compound = utils.stringToElements(molecularFormula);
 
-    var possibleSolutions = und.reduce(compound, function(dimensions, elemCoefficient, elemSym){
+    var possibleSolutions = _.reduce(compound, function(dimensions, elemCoefficient, elemSym){
         function appendElementInfo(charge){
             return { element: elemSym,
                 charge: charge,
@@ -140,18 +140,18 @@ var atomCharges = function(molecularFormula, moleculeCharge){
         }
         var element = elements[elemSym];
         var elementCharges = stringToCharges(element.oxidation_states);
-        var newDimension = und.map(elementCharges, appendElementInfo);
+        var newDimension = _.map(elementCharges, appendElementInfo);
         return utils.addDimension(dimensions, newDimension);
     }, [[]]);
 
     var isSolution = function(possibleSolution){
-        var solutionCharge = und.reduce(possibleSolution, function(acc, elem){
+        var solutionCharge = _.reduce(possibleSolution, function(acc, elem){
             return acc + elem.charge * elem.chargeMultiplier;
         }, 0);
         return solutionCharge == moleculeCharge;
     };
 
-    return und.filter(possibleSolutions, isSolution);
+    return _.filter(possibleSolutions, isSolution);
 };
 
 
@@ -242,7 +242,7 @@ var numberOfMoles = function(molecule, totalMass){
 };
 
 var moleFractionsFromMass = function(moleculeMassMap){
-	var moleculeMoles = und.reduce(moleculeMassMap, 
+	var moleculeMoles = _.reduce(moleculeMassMap, 
 		function(acc, mass, molecule){
 			var numOfMoles = mass / molarMass(molecule);
 			acc[molecule] = numOfMoles;
@@ -250,11 +250,11 @@ var moleFractionsFromMass = function(moleculeMassMap){
 		}, {}
 		);
 
-	var totalMoles = und.reduce(moleculeMoles, function(acc, numOfMoles){
+	var totalMoles = _.reduce(moleculeMoles, function(acc, numOfMoles){
 		return acc + numOfMoles;
 	}, 0);
 
-	return und.reduce(moleculeMoles, function(acc, numOfMoles, molecule){
+	return _.reduce(moleculeMoles, function(acc, numOfMoles, molecule){
 		acc[molecule] = numOfMoles/totalMoles;
 		return acc;
 	}, {});
