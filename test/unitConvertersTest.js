@@ -14,12 +14,4 @@ describe('Unit Converters', function(){
 			assert.equal(453.5923, unitConverters.mass("1 lb", "g"));
 		});
 	});
-	describe('metric unit', function(){
-		it('should return true for kg', function(){
-			assert.equal("k", unitConverters.metricUnit("kg"));
-		});
-		it('should return mu (micro) for mum (micro-meters)', function(){
-			assert.equal("mu", unitConverters.metricUnit("mum"));
-		});
-	});
 });

@@ -18,6 +18,13 @@ var metricMap = {
 	p: .000001
 };
 
+var suffixMetricMap = function(suffix){
+	return und.reduce(metricMap, function(acc, val, key){
+		acc[key + suffix] = val;
+		return acc;
+	}, {});
+};
+
 var gramMap = und.extend(
 	{
 		oz: 453.5923/16,
@@ -25,9 +32,9 @@ var gramMap = und.extend(
 		g: 1
 
 	},
-	metricMap);
+	suffixMetricMap('g'));
 
-var literMap = und.extend({L: 1}, metricMap);
+var literMap = und.extend({L: 1}, suffixMetricMap('L'));
 
 var pascalMap = und.extend(
 	{
@@ -37,16 +44,7 @@ var pascalMap = und.extend(
 		mmHg: 1/133.3223684211,
 		inHg: 1/3386.389
 	},
-	metricMap);
-
-var metricUnit = function(unit){
-	return metricUnitRe.test(unit) ? unit.match(metricUnitRe)[1] : undefined;
-};
-
-var metricOrSelf = function(unit){
-	var metric = metricUnit(unit);
-	return metric ? metric : unit;
-};
+	suffixMetricMap('Pa'));
 
 var converter = function(conversionMap, type){
 	return function(input, newUnit) {
@@ -55,8 +53,7 @@ var converter = function(conversionMap, type){
 		};
 		var resArray = input.match(re);
 		var value = Number(resArray[1]);
-		var oldUnit = metricOrSelf(resArray[2]);
-		var newUnit = metricOrSelf(newUnit);
+		var oldUnit = resArray[2];
 		return conversionMap[oldUnit]/conversionMap[newUnit] * value;	
 	};
 };
@@ -65,5 +62,4 @@ module.exports = {
 	mass: converter(gramMap, 'mass'),
 	volume: converter(literMap, 'volume'),
 	pressure: converter(pascalMap, 'pressure')
-	metricUnit: metricUnit
 }
