@@ -172,26 +172,34 @@ var atomCharges = function(molecularFormula, moleculeCharge){
     return _.filter(possibleSolutions, isSolution);
 };
 
-var toC = _.bind(unitConverters.temperature, _, 'C');
-
+//dTf = -1 * Kf * m * i
 var freezingPointDepression_Kf = utils.chainFunctions(
+	utils.paramDefaulter('i', 1),
 	utils.paramConverter('dTf', unitConverters.temperatureDiff, 'C'),
-	utils.divider([-1, 'dTf'], ['m'])
+	utils.divider([-1, 'dTf'], ['m', 'i'])
 	);
 
 var freezingPointDepression_m = utils.chainFunctions(
+	utils.paramDefaulter('i', 1),
 	utils.paramConverter('dTf', unitConverters.temperatureDiff, 'C'),
-	utils.divider([-1, 'dTf'], ['Kf'])
+	utils.divider([-1, 'dTf'], ['Kf', 'i'])
 	);
 
 var freezingPointDepression_dTf = utils.chainFunctions(
-	utils.multiplier(-1, 'Kf', 'm'),
+	utils.paramDefaulter('i', 1),
+	utils.multiplier(-1, 'Kf', 'm', 'i'),
 	utils.unitAppender('C'));
+
+var freezingPointDepression_i = utils.chainFunctions(
+	utils.paramConverter('dTf', unitConverters.temperatureDiff, 'C'),
+	utils.divider([-1, 'dTf'], ['Kf', 'm'])
+	);
 
 var freezingPointDepressionFnMap = {
     Kf: freezingPointDepression_Kf,
     m: freezingPointDepression_m,
-    dTf: freezingPointDepression_dTf
+    dTf: freezingPointDepression_dTf,
+    i: freezingPointDepression_i
 };
 
 var boilingPointElevation_Kb = utils.chainFunctions(
@@ -286,18 +294,21 @@ var molalityFnMap = {
 
 //P = iMRT
 var osmoticPressure_M = utils.chainFunctions(
+	utils.paramDefaulter('i', 1),
 	utils.paramConverter('P', unitConverters.pressure, 'atm'),
 	utils.paramConverter('T', unitConverters.temperature, 'K'),
 	utils.divider(['P'],[R, 'T', 'i'])
 	);
 
 var osmoticPressure_T = utils.chainFunctions(
+	utils.paramDefaulter('i', 1),
 	utils.paramConverter('P', unitConverters.pressure, 'atm'),
 	utils.divider(['P'],[R, 'M', 'i']),
 	utils.unitAppender('K')
 	);
 
 var osmoticPressure_P = utils.chainFunctions(
+	utils.paramDefaulter('i', 1),
 	utils.paramConverter('T', unitConverters.temperature, 'K'),
 	utils.multiplier('i', 'M', R, 'T'),
 	utils.unitAppender('atm')
