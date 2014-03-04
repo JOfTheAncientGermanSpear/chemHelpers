@@ -60,7 +60,7 @@ describe('Utils', function(){
             assert.deepEqual(expected, actual);
         })
     });
-    describe('get function for unknown param', function(){
+    describe('calculate unknown param', function(){
         it('should return the function to calculate the unknown param', function(){
             var fnMap = {
                 a: function(params){
@@ -74,9 +74,8 @@ describe('Utils', function(){
                 b: 3
             };
             var expected = 6;
-            var fn = utils.getFunctionForMissingParam(fnMap, params);
-            assert.equal(expected, fn().result);
-            assert.equal('a', fn().calculated_for)
+            var result = utils.calculateUnknownParam(fnMap, params);
+            assert.equal(expected, result.a);
         })
     });
     describe('multilpier', function(){

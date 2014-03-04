@@ -107,18 +107,17 @@ var idealGasTemp = utils.chainFunctions(
 	utils.unitAppender('K')
 	);
 
-var idealGasLaw = function(knownParams){
+var unknownCalculator = function(fnMap){
+	return function(knownParams){
+		return _.extend(knownParams, utils.calculateUnknownParam(fnMap, knownParams));
+	};
+};
 
-    var fnMap = {
-        P: idealGasPressure,
-        V: idealGasVolume,
-        n: idealGasMoles,
-        T: idealGasTemp
-    };
-
-	var missingParamFn = utils.getFunctionForMissingParam(fnMap, knownParams);
-
-	return missingParamFn();
+var idealGasLawFnMap =  {
+    P: idealGasPressure,
+    V: idealGasVolume,
+    n: idealGasMoles,
+    T: idealGasTemp
 };
 
 var unitConversions = 
@@ -189,17 +188,10 @@ var freezingPointDepression_dTf = utils.chainFunctions(
 	utils.multiplier(-1, 'Kf', 'm'),
 	utils.unitAppender('C'));
 
-var freezingPointDepression = function(knownParams){
-
-    var fnMap = {
-        Kf: freezingPointDepression_Kf,
-        m: freezingPointDepression_m,
-        dTf: freezingPointDepression_dTf
-    };
-
-    var missingParamFn = utils.getFunctionForMissingParam(fnMap, knownParams);
-
-    return missingParamFn();
+var freezingPointDepressionFnMap = {
+    Kf: freezingPointDepression_Kf,
+    m: freezingPointDepression_m,
+    dTf: freezingPointDepression_dTf
 };
 
 var boilingPointElevation_Kb = utils.chainFunctions(
@@ -216,17 +208,10 @@ var boilingPointElevation_dTb = utils.chainFunctions(
 	utils.multiplier('Kb', 'm'),
 	utils.unitAppender('C'));
 
-var boilingPointElevation = function(knownParams){
-	var fnMap = {
-		Kb: boilingPointElevation_Kb,
-		m: boilingPointElevation_m,
-		dTb: boilingPointElevation_dTb
-	};
-
-	var missingParamFn = utils.getFunctionForMissingParam(fnMap, knownParams);
-
-    return missingParamFn();
-
+var boilingPointElevationFnMap = {
+	Kb: boilingPointElevation_Kb,
+	m: boilingPointElevation_m,
+	dTb: boilingPointElevation_dTb
 };
 
 var molalityToPercentMass = function(molecule, molality){
@@ -306,17 +291,10 @@ var percentError = function(theoretical, actual){
 	return Math.abs(theoretical - actual)/actual * 100;
 };
 
-var density = function(knownParams){
-	//d = m/V
-	var fnMap = {
-		m: utils.multiplier('d', 'V'),
-		V: utils.divider(['m'],['d']),
-		d: utils.divider(['m'],['V'])
-	};
-
-	var missingParamFn = utils.getFunctionForMissingParam(fnMap, knownParams);
-
-    return missingParamFn();
+var densityFnMap = {
+	m: utils.multiplier('d', 'V'),
+	V: utils.divider(['m'],['d']),
+	d: utils.divider(['m'],['V'])
 };
 
 var dissolve = function(params){
@@ -330,7 +308,7 @@ module.exports = {
 	molarMass: molarMass,
 	percentComposition: percentComposition,
 	empiricalFormula: empiricalFormula,
-	idealGasLaw: idealGasLaw,
+	idealGasLaw: unknownCalculator(idealGasLawFnMap),
 	idealGasPressure: idealGasPressure,
 	idealGasVolume: idealGasVolume,
 	idealGasMoles: idealGasMoles,
@@ -339,7 +317,7 @@ module.exports = {
 	mercuryHeightToAtm: mercuryHeightToAtm,
     solubilityLookup: solubilityLookup,
     atomCharges: atomCharges,
-    freezingPointDepression: freezingPointDepression,
+    freezingPointDepression: unknownCalculator(freezingPointDepressionFnMap),
     molalityToPercentMass: molalityToPercentMass,
     percentMass: percentMass,
     percentMassToMolality: percentMassToMolality,
@@ -350,8 +328,8 @@ module.exports = {
     elements: utils.mapToFunction(elements),
     dissolve: dissolve,
     numberOfMoles: numberOfMoles,
-    boilingPointElevation: boilingPointElevation,
+    boilingPointElevation: unknownCalculator(boilingPointElevationFnMap),
     kbMap: kbMap,
-    density: density,
+    density: unknownCalculator(densityFnMap),
     molality: molality
 };

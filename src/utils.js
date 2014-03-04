@@ -59,7 +59,7 @@ var flatMap = function(array, fn, depth) {
     return _.flatten(_.map(array, fn), depth ? depth : 1);
 };
 
-var getFunctionForMissingParam = function(fnMap, params){
+var calculateUnknownParam = function(fnMap, params){
     function curryKnownParams(fn){
         return _.partial(fn, params);
     }
@@ -70,12 +70,10 @@ var getFunctionForMissingParam = function(fnMap, params){
         first().
         value();
 
-    return function(){
-        return {
-            calculated_for: unknownParam,
-            result: curryKnownParams(fnMap[unknownParam])()
-        };
-    }
+    var res = {};
+    res[unknownParam] = curryKnownParams(fnMap[unknownParam])();
+    
+    return res;
 };
 
 var mapToFunction = function(map){
@@ -139,7 +137,7 @@ module.exports = {
     symsAndCoeffsMap: symsAndCoeffsMap,
     flatMap: flatMap,
     addDimension: addDimension,
-    getFunctionForMissingParam: getFunctionForMissingParam,
+    calculateUnknownParam: calculateUnknownParam,
     mapToFunction: mapToFunction,
     multiplier: multiplier,
     divider: divider,
