@@ -263,7 +263,7 @@ var numberOfMoles = function(molecule, totalMass){
 var moleFractionsFromMass = function(moleculeMassMap){
 	var moleculeMoles = _.reduce(moleculeMassMap, 
 		function(acc, mass, molecule){
-			var numOfMoles = mass / molarMass(molecule);
+			var numOfMoles = unitConverters.mass(mass, 'g') / molarMass(molecule);
 			acc[molecule] = numOfMoles;
 			return acc;
 		}, {}
