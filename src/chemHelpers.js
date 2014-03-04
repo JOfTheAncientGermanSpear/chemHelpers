@@ -185,11 +185,19 @@ var freezingPointDepression = function(knownParams){
     return missingParamFn();
 };
 
-var boilingPointElevation_Kb = utils.divider(['dTb'], ['m']);
+var boilingPointElevation_Kb = utils.chainFunctions(
+	utils.paramConverter('dTb', unitConverters.temperatureDiff, 'C'),
+	utils.divider(['dTb'], ['m'])
+	);
 
-var boilingPointElevation_m = utils.divider(['dTb'], ['Kb']);
+var boilingPointElevation_m = utils.chainFunctions(
+	utils.paramConverter('dTb', unitConverters.temperatureDiff, 'C'),
+	utils.divider(['dTb'], ['Kb'])
+	);
 
-var boilingPointElevation_dTb = utils.multiplier('Kb', 'm');
+var boilingPointElevation_dTb = utils.chainFunctions(
+	utils.multiplier('Kb', 'm'),
+	utils.unitAppender('C'));
 
 var boilingPointElevation = function(knownParams){
 	var fnMap = {
