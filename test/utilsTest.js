@@ -131,4 +131,18 @@ describe('Utils', function(){
             assert.equal(expected, actual);
         });
     });
+    describe('param defaulters', function(){
+        it('should give the default value to an object if not set', function(){
+            var default_i_to_1 = utils.paramDefaulter('i', 1);
+            var q = {a: 2};
+            var expected = {a: 2, i: 1};
+            var actual = default_i_to_1(q);
+            assert.deepEqual(expected, actual);
+        });
+        it('should not overwrite a value that is specified', function(){
+            var default_i_to_1 = utils.paramDefaulter('i', 1);
+            var q = {a: 2, i: 3};
+            assert.deepEqual(q, default_i_to_1(q));
+        });
+    });
 });

@@ -126,6 +126,14 @@ var paramConverter = function(param, converterFn, newUnit){
     };
 };
 
+var paramDefaulter = function(param, defaultValue){
+    var defaultObj = {};
+    defaultObj[param] = defaultValue;
+    return function(params){
+        return _.defaults(params, defaultObj)
+    }
+};
+
 var chainFunctions = function(/*functions*/){
     var functions = _.toArray(arguments).reverse();
     return _.compose.apply(null, functions);
@@ -144,5 +152,6 @@ module.exports = {
     negater: negater,
     unitAppender: unitAppender,
     paramConverter: paramConverter,
+    paramDefaulter: paramDefaulter,
     chainFunctions: chainFunctions
 };
