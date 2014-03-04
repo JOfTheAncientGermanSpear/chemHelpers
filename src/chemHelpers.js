@@ -284,6 +284,38 @@ var molalityFnMap = {
 	m: molality_m
 };
 
+//P = iMRT
+var osmoticPressure_M = utils.chainFunctions(
+	utils.paramConverter('P', unitConverters.pressure, 'atm'),
+	utils.paramConverter('T', unitConverters.temperature, 'K'),
+	utils.divider(['P'],[R, 'T', 'i'])
+	);
+
+var osmoticPressure_T = utils.chainFunctions(
+	utils.paramConverter('P', unitConverters.pressure, 'atm'),
+	utils.divider(['P'],[R, 'M', 'i']),
+	utils.unitAppender('K')
+	);
+
+var osmoticPressure_P = utils.chainFunctions(
+	utils.paramConverter('T', unitConverters.temperature, 'K'),
+	utils.multiplier('i', 'M', R, 'T'),
+	utils.unitAppender('atm')
+	);
+
+var osmoticPressure_i = utils.chainFunctions(
+	utils.paramConverter('P', unitConverters.pressure, 'atm'),
+	utils.paramConverter('T', unitConverters.temperature, 'K'),
+	utils.divider(['P'],[R, 'T', 'M'])
+	);
+
+var osmoticPressureFnMap = {
+	P: osmoticPressure_P,
+	M: osmoticPressure_M,
+	T: osmoticPressure_T,
+	i: osmoticPressure_i
+}
+
 var moleFractionsFromMass = function(moleculeMassMap){
 	var moleculeMoles = _.reduce(moleculeMassMap, 
 		function(acc, mass, molecule){
@@ -347,5 +379,6 @@ module.exports = {
     boilingPointElevation: unknownCalculator(boilingPointElevationFnMap),
     kbMap: kbMap,
     density: unknownCalculator(densityFnMap),
-    molality: unknownCalculator(molalityFnMap)
+    molality: unknownCalculator(molalityFnMap),
+    osmoticPressure: unknownCalculator(osmoticPressureFnMap)
 };
