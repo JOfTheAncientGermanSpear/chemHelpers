@@ -24,4 +24,9 @@ describe('Unit Converters', function(){
 			assert.equal(180, unitConverters.temperatureDiff("100 C", "f"));
 		});
 	});
+	describe('pressure', function(){
+		it('should set 1 atm to 760 mmHg', function(){
+			assert.equal(760, Math.round(unitConverters.pressure("1 atm", "mmHg")));
+		});
+	})
 });

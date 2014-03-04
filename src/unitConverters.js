@@ -38,11 +38,11 @@ var literMap = _.extend({L: 1}, suffixMetricMap('L'));
 
 var pascalMap = _.extend(
 	{
-		atm: 1/101325,
+		atm: 101325,
 		Pa: 1,
-		torr: 1/133.3223684211,
-		mmHg: 1/133.3223684211,
-		inHg: 1/3386.389
+		torr: 133.3223684211,
+		mmHg: 133.3223684211,
+		inHg: 3386.389
 	},
 	suffixMetricMap('Pa'));
 
