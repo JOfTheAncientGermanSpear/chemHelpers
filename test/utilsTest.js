@@ -2,6 +2,8 @@ var assert = require("assert");
 
 var utils = require("../src/utils.js");
 
+var unitConverters = require('../src/unitConverters.js');
+
 describe('Utils', function(){
     describe('string to elements', function(){
         it('should return {H: 2, O: 1} from "H2O"', function(){
@@ -103,6 +105,31 @@ describe('Utils', function(){
             var by2 = utils.divider(['a'], [2]);
             var q = {a: 2};
             assert.equal(1, by2(q));
+        });
+    });
+    describe('unit appender', function(){
+        it('should append the unit to a value', function(){
+            var expected = "2s";
+            var append_s = utils.unitAppender("s");
+            assert.equal(expected, append_s(2));
+        });
+    });
+    describe('param converter', function(){
+        it('should convert the specified key', function(){
+            var input = {a: 2, b: "1 kg"};
+            var expected = {a: 2, b: "1000g"};
+            var paramConverter = utils.paramConverter('b', unitConverters.mass, 'g');
+            assert.deepEqual(expected, paramConverter(input));
+        });
+    });
+    describe('chain functions', function(){
+        it('should execute a chain of functions', function(){
+            var multiplyBy2 = function(a){return a * 2};
+            var add3 = function(a){return a + 3};
+            var expected = 9;
+            var add3ThanMultiplyBy2 = utils.chainFunctions(multiplyBy2, add3);
+            var actual = add3ThanMultiplyBy2(3);
+            assert.equal(expected, actual);
         });
     });
 });

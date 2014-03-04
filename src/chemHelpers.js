@@ -8,6 +8,8 @@ var kbMap = require('./kbMap.json');
 
 var solubilityChart = require("./solubilityChart.json");
 
+var unitConverters = require("./unitConverters.js");
+
 var elements = _.reduce(pTable, function(acc, elem){
   acc[elem.symbol] = elem;
   return acc;
@@ -154,12 +156,15 @@ var atomCharges = function(molecularFormula, moleculeCharge){
     return _.filter(possibleSolutions, isSolution);
 };
 
+var toC = _.bind(unitConverters.temperature, _, 'C');
 
 var freezingPointDepression_Kf = utils.divider([-1, 'dTf'], ['m']);
 
 var freezingPointDepression_m = utils.divider([-1, 'dTf'], ['Kf']);
 
-var freezingPointDepression_dTf = utils.multiplier(-1, 'Kf', 'm');
+var freezingPointDepression_dTf = utils.chainFunctions(
+	utils.multiplier(-1, 'Kf', 'm'),
+	utils.unitAppender('C'));
 
 var freezingPointDepression = function(knownParams){
 

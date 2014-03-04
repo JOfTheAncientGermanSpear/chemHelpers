@@ -113,6 +113,30 @@ var divider = function(nums, denoms){
     };
 };
 
+var unitAppender = function(unit){
+    return function(value){
+        return value + unit;
+    };
+};
+
+var paramConverter = function(param, converterFn, newUnit){
+    return function(params){
+        var newParams = _.extend({}, params);
+        var oldValue = params[param];
+        newParams[param] = converterFn(oldValue, newUnit) + newUnit;
+        return newParams;
+    };
+};
+
+var chainFunctions = function(/*functions*/){
+    var functions = _.toArray(arguments);
+    return function(seed) {
+        return _.reduce(functions, function(acc, fn){
+            return fn(acc);
+        }, seed);
+    };
+};
+
 module.exports = {
     stringToElements: stringToElements,
     splitConcat: splitConcat,
@@ -123,5 +147,8 @@ module.exports = {
     mapToFunction: mapToFunction,
     multiplier: multiplier,
     divider: divider,
-    negater: negater
+    negater: negater,
+    unitAppender: unitAppender,
+    paramConverter: paramConverter,
+    chainFunctions: chainFunctions
 };
