@@ -19,4 +19,9 @@ describe('Unit Converters', function(){
 			assert.equal(212, unitConverters.temperature("100 C", "f"));
 		});
 	});
+	describe('temperature diff', function(){
+		it('should convert C to 9/5 * f', function(){
+			assert.equal(180, unitConverters.temperatureDiff("100 C", "f"));
+		});
+	});
 });

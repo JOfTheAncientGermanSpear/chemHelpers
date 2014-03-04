@@ -84,10 +84,34 @@ var temperatureConverter = function(temp, newUnit) {
 	return fromCelciusMap[newUnit](inCelcius);
 };
 
+var temperatureDiffConverter = function(temp, newUnit){
+	var fromCelciusMap = {
+		"K": _.identity,
+		"f": function(C){ return 9/5 * C},
+		"C": _.identity
+	};
+
+	var toCelciusMap = {
+		"K": _.identity,
+		"f": function(f){ return 5/9 * f; },
+		"C": _.identity
+	};
+	var tempRe = /([0-9]+(?:\.[0-9]+)?) *([CKf])/
+	if (!tempRe.test(temp)){
+		throw(temp + ' is not a valid temperature');
+	}
+	var resArray = temp.match(tempRe);
+	var value = Number(resArray[1]);
+	var oldUnit = resArray[2];
+	var inCelcius = toCelciusMap[oldUnit](value);
+	return fromCelciusMap[newUnit](inCelcius);	
+};
+
 module.exports = {
 	mass: converter(gramMap, 'mass'),
 	volume: converter(literMap, 'volume'),
 	pressure: converter(pascalMap, 'pressure'),
 	time: converter(timeMap, 'time'),
-	temperature: temperatureConverter
+	temperature: temperatureConverter,
+	temperatureDiff: temperatureDiffConverter
 }

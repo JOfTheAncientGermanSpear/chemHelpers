@@ -158,9 +158,15 @@ var atomCharges = function(molecularFormula, moleculeCharge){
 
 var toC = _.bind(unitConverters.temperature, _, 'C');
 
-var freezingPointDepression_Kf = utils.divider([-1, 'dTf'], ['m']);
+var freezingPointDepression_Kf = utils.chainFunctions(
+	utils.paramConverter('dTf', unitConverters.temperatureDiff, 'C'),
+	utils.divider([-1, 'dTf'], ['m'])
+	);
 
-var freezingPointDepression_m = utils.divider([-1, 'dTf'], ['Kf']);
+var freezingPointDepression_m = utils.chainFunctions(
+	utils.paramConverter('dTf', unitConverters.temperatureDiff, 'C'),
+	utils.divider([-1, 'dTf'], ['Kf'])
+	);
 
 var freezingPointDepression_dTf = utils.chainFunctions(
 	utils.multiplier(-1, 'Kf', 'm'),

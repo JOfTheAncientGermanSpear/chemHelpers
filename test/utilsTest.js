@@ -117,7 +117,7 @@ describe('Utils', function(){
     describe('param converter', function(){
         it('should convert the specified key', function(){
             var input = {a: 2, b: "1 kg"};
-            var expected = {a: 2, b: "1000g"};
+            var expected = {a: 2, b: 1000};
             var paramConverter = utils.paramConverter('b', unitConverters.mass, 'g');
             assert.deepEqual(expected, paramConverter(input));
         });

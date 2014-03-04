@@ -123,7 +123,7 @@ var paramConverter = function(param, converterFn, newUnit){
     return function(params){
         var newParams = _.extend({}, params);
         var oldValue = params[param];
-        newParams[param] = converterFn(oldValue, newUnit) + newUnit;
+        newParams[param] = converterFn(oldValue, newUnit);
         return newParams;
     };
 };
