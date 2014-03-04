@@ -129,12 +129,8 @@ var paramConverter = function(param, converterFn, newUnit){
 };
 
 var chainFunctions = function(/*functions*/){
-    var functions = _.toArray(arguments);
-    return function(seed) {
-        return _.reduce(functions, function(acc, fn){
-            return fn(acc);
-        }, seed);
-    };
+    var functions = _.toArray(arguments).reverse();
+    return _.compose.apply(null, functions);
 };
 
 module.exports = {
