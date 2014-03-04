@@ -277,6 +277,12 @@ var numberOfMoles = function(molecule, totalMass){
 	return totalMass / molarMass(molecule);
 };
 
+var molality = function(params){
+	var moles = params.n;
+	var mass = unitConverters.mass(params.mass, 'kg');
+	return _.extend( {m: moles/mass}, params);
+};
+
 var moleFractionsFromMass = function(moleculeMassMap){
 	var moleculeMoles = _.reduce(moleculeMassMap, 
 		function(acc, mass, molecule){
@@ -346,5 +352,6 @@ module.exports = {
     numberOfMoles: numberOfMoles,
     boilingPointElevation: boilingPointElevation,
     kbMap: kbMap,
-    density: density
+    density: density,
+    molality: molality
 };
