@@ -76,19 +76,36 @@ var empiricalFormula = function(){
 var R = 0.08206;//(L atm)/(K mol)
 
 //PV = nRT
-var idealGasPressure = function(params) {
-	//P = nRT/V
-	return  params.n * R * params.T /params.V;
-};
+var idealGasPressure = utils.chainFunctions(
+	utils.paramConverter('T', unitConverters.temperature, 'K'),
+	utils.paramConverter('V', unitConverters.volume, 'L'),
+	utils.divider(['n', R, 'T'], ['V']),
+	utils.unitAppender('atm')
+	);
 
 //V = nRT/P
-var idealGasVolume = utils.divider(['n', R, 'T'], ['P']);
+var idealGasVolume = utils.chainFunctions(
+	utils.paramConverter('T', unitConverters.temperature, 'K'),
+	utils.paramConverter('P', unitConverters.pressure, 'atm'),
+	utils.divider(['n', R, 'T'], ['P']),
+	utils.unitAppender('L')
+	);
 
 //n = PV/RT
-var idealGasMoles = utils.divider(['P', 'V'], [R, 'T']);
+var idealGasMoles = utils.chainFunctions(
+	utils.paramConverter('T', unitConverters.temperature, 'K'),
+	utils.paramConverter('P', unitConverters.pressure, 'atm'),
+	utils.paramConverter('V', unitConverters.volume, 'L'),
+	utils.divider(['P', 'V'], [R, 'T'])
+	);
 
 //T = PV/nR
-var idealGasTemp = utils.divider(['P', 'V'], [R, 'n']);
+var idealGasTemp = utils.chainFunctions(
+	utils.paramConverter('P', unitConverters.pressure, 'atm'),
+	utils.paramConverter('V', unitConverters.volume, 'L'),
+	utils.divider(['P', 'V'], [R, 'n']),
+	utils.unitAppender('K')
+	);
 
 var idealGasLaw = function(knownParams){
 
