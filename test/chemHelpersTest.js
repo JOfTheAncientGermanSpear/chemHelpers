@@ -17,5 +17,11 @@ describe('Chem Helpers', function(){
             var params = {n: 2, T: "290 K", P: "1.2 atm"};
             assert.equal(chemHelpers.idealGasLaw(params).V, chemHelpers.idealGasVolume(params));
         })
-    })
+    });
+    describe('molaltiy', function(){
+        it('should calculate molality by mass over n', function(){
+            var q = {mass: "10 kg", n: 2};
+            assert.equal(.2, chemHelpers.molality(q).m);
+        });
+    });
 });

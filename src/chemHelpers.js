@@ -262,10 +262,26 @@ var numberOfMoles = function(molecule, totalMass){
 	return totalMass / molarMass(molecule);
 };
 
-var molality = function(params){
-	var moles = params.n;
-	var mass = unitConverters.mass(params.mass, 'kg');
-	return _.extend( {m: moles/mass}, params);
+//m = n/mass
+var molality_n = utils.chainFunctions(
+	utils.paramConverter('mass', unitConverters.mass, 'kg'),
+	utils.multiplier('m', 'mass')
+);
+
+var molality_mass = utils.chainFunctions(
+	utils.divider(['n'], ['m']),
+	utils.unitAppender('kg')
+);
+
+var molality_m = utils.chainFunctions(
+	utils.paramConverter('mass', unitConverters.mass, 'kg'),
+	utils.divider(['n'], ['mass'])
+);
+
+var molalityFnMap = {
+	n: molality_n,
+	mass: molality_mass,
+	m: molality_m
 };
 
 var moleFractionsFromMass = function(moleculeMassMap){
@@ -331,5 +347,5 @@ module.exports = {
     boilingPointElevation: unknownCalculator(boilingPointElevationFnMap),
     kbMap: kbMap,
     density: unknownCalculator(densityFnMap),
-    molality: molality
+    molality: unknownCalculator(molalityFnMap)
 };
