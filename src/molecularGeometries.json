@@ -1,0 +1,15 @@
+[
+	{"numOfBondingGroups": 2, "numOfLonePairs": 0, "electronPairGeometry": "linear", "molecularGeometry": "linear", "bondAngle": [180]},
+	{"numOfBondingGroups": 3, "numOfLonePairs": 0, "electronPairGeometry": "trigonal planar", "molecularGeometry": "trigonal planar", "bondAngle": [120]},
+	{"numOfBondingGroups": 2, "numOfLonePairs": 1, "electronPairGeometry": "trigonal planar", "molecularGeometry": "bent", "bondAngle": [119]},
+	{"numOfBondingGroups": 4, "numOfLonePairs": 0, "electronPairGeometry": "tetrahedral", "molecularGeometry": "tetrahedral", "bondAngle": [109.5]},
+	{"numOfBondingGroups": 3, "numOfLonePairs": 1, "electronPairGeometry": "tetrahedral", "molecularGeometry": "trigonal pyramidal", "bondAngle": [108]},
+	{"numOfBondingGroups": 2, "numOfLonePairs": 2, "electronPairGeometry": "tetrahedral", "molecularGeometry": "bent", "bondAngle": [108]},
+	{"numOfBondingGroups": 5, "numOfLonePairs": 0, "electronPairGeometry": "trigonal bipyramidal", "molecularGeometry": "trigonal bipyramidal", "bondAngle": [90, 120, 180]},
+	{"numOfBondingGroups": 4, "numOfLonePairs": 1, "electronPairGeometry": "trigonal bipyramidal", "molecularGeometry": "seesaw", "bondAngle": [90, 120, 180]},
+	{"numOfBondingGroups": 3, "numOfLonePairs": 2, "electronPairGeometry": "trigonal bipyramidal", "molecularGeometry": "T-shaped", "bondAngle": [90, 180]},
+	{"numOfBondingGroups": 2, "numOfLonePairs": 3, "electronPairGeometry": "trigonal bipyramidal", "molecularGeometry": "linear", "bondAngle": [180]},
+	{"numOfBondingGroups": 6, "numOfLonePairs": 0, "electronPairGeometry": "octahedral", "molecularGeometry": "octahedral", "bondAngle": [90, 180]},
+	{"numOfBondingGroups": 5, "numOfLonePairs": 1, "electronPairGeometry": "octahedral", "molecularGeometry": "square pyramidal", "bondAngle": [90, 180]},
+	{"numOfBondingGroups": 4, "numOfLonePairs": 2, "electronPairGeometry": "octahedral", "molecularGeometry": "square planar", "bondAngle": [90, 180]}
+]

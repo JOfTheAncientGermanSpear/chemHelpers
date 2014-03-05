@@ -10,6 +10,8 @@ var solubilityChart = require("./solubilityChart.json");
 
 var unitConverters = require("./unitConverters.js");
 
+var molecularGeometries = require("./molecularGeometries.json");
+
 var elements = _.reduce(pTable, function(acc, elem){
   acc[elem.symbol] = elem;
   return acc;
@@ -363,6 +365,10 @@ var dissolve = function(params){
 	return initialConcentration * originalVolume / newVolume;
 };
 
+var getMolecularGeometries = function(traits){
+	return _.where(molecularGeometries, traits);
+};
+
 module.exports = {
 	molarMass: molarMass,
 	percentComposition: percentComposition,
@@ -391,5 +397,6 @@ module.exports = {
     kbMap: kbMap,
     density: unknownCalculator(densityFnMap),
     molality: unknownCalculator(molalityFnMap),
-    osmoticPressure: unknownCalculator(osmoticPressureFnMap)
+    osmoticPressure: unknownCalculator(osmoticPressureFnMap),
+    molecularGeometries: getMolecularGeometries
 };
